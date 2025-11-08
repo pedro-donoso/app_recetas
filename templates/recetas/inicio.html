@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Jumbotron -->
+<div class="jumbotron bg-primary text-white py-5">
+    <div class="container text-center">
+        <h1 class="display-4">Bienvenido a Recetas Deliciosas</h1>
+        <p class="lead">Descubre las mejores recetas caseras</p>
+        <a class="btn btn-light btn-lg" href="{% url 'recetas:lista_recetas' %}">Ver Recetas</a>
+    </div>
+</div>
+
+<!-- Lista de Recetas -->
+<div class="container my-5">
+    <h2 class="text-center mb-4">Últimas Recetas</h2>
+    
+    {% if recetas %}
+        <div class="row">
+            {% for receta in recetas %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    {% if receta.imagen %}
+                        <img src="{{ receta.imagen.url }}" class="card-img-top" alt="{{ receta.nombre }}">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ receta.nombre }}</h5>
+                        <p class="card-text">{{ receta.ingredientes|truncatewords:10 }}</p>
+                        <a href="{% url 'recetas:detalle_receta' receta.pk %}" class="btn btn-primary">Ver Receta</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-center">No hay recetas disponibles.</p>
+    {% endif %}
+</div>
+{% endblock %}
