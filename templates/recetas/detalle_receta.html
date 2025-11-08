@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5">
+    {% if receta %}
+        <div class="row">
+            <div class="col-md-6">
+                {% if receta.imagen %}
+                    <img src="{{ receta.imagen.url }}" class="img-fluid" alt="{{ receta.nombre }}">
+                {% endif %}
+            </div>
+            <div class="col-md-6">
+                <h1>{{ receta.nombre }}</h1>
+                
+                <h3 class="mt-4">Ingredientes</h3>
+                <div class="card">
+                    <div class="card-body">
+                        <p style="white-space: pre-line;">{{ receta.ingredientes }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mt-5">
+            <div class="col-12">
+                <h3>Instrucciones</h3>
+                <div class="card">
+                    <div class="card-body">
+                        <p style="white-space: pre-line;">{{ receta.instrucciones }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-4">
+            <a href="{% url 'recetas:lista_recetas' %}" class="btn btn-secondary">Volver</a>
+        </div>
+    {% else %}
+        <div class="alert alert-danger text-center">
+            <h4>Receta no encontrada</h4>
+            <a href="{% url 'recetas:lista_recetas' %}" class="btn btn-primary">Ver Recetas</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
